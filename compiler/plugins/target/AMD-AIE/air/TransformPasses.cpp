@@ -26,5 +26,6 @@ void registerAIRTransformPasses() {
   registerAIRSpecializeDmaBroadcast();
   registerAIRUnrollLoopForPipeliningPattern();
   registerAIRCollapseHerdPass();
+  registerAIRIsolateAsyncDmaLoopNests();
 }
 }  // namespace mlir::iree_compiler::AMDAIE
