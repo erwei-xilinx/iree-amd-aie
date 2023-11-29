@@ -53,7 +53,7 @@ module attributes { transform.with_named_sequence } {
     transform.include @cleanup failures(propagate) (%variant_op) : (!transform.any_op) -> ()
 
     %tiled_reduction, %loop =
-      transform.structured.tile_using_for %padded [0, 0, 8]
+      transform.structured.tile_using_for %padded [0, 0, 16]
       : (!transform.any_op) -> (!transform.any_op, !transform.any_op)
 
     // Pad operation.
