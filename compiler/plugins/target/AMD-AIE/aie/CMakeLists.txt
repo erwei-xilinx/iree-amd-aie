@@ -276,6 +276,107 @@ iree_cc_library(
 )
 
 ###############################################################################
+# AIEVec Analysis Passes
+###############################################################################
+
+iree_tablegen_library(
+  NAME
+    AIEVecAnalysisPassesIncGen
+  TD_FILE
+    "${IREE_MLIR_AIE_SOURCE_DIR}/include/aie/Dialect/AIEVec/Analysis/Passes.td"
+  OUTS
+    -gen-pass-decls Dialect/AIEVec/Analysis/Passes.h.inc
+)
+
+iree_cc_library(
+  NAME
+    AIEVecAnalysisPassHeaders
+  HDRS
+    "${IREE_MLIR_AIE_SOURCE_DIR}/include/aie/Dialect/AIEVec/Analysis/Passes.h"
+    "Passes.h.inc"
+  DEPS
+    ::AIEVecAnalysisPassesIncGen
+    MLIRPass
+  PUBLIC
+)
+
+###############################################################################
+# AIEVec Transform Passes
+###############################################################################
+
+iree_tablegen_library(
+  NAME
+    AIEVecTransformPassesIncGen
+  TD_FILE
+    "${IREE_MLIR_AIE_SOURCE_DIR}/include/aie/Dialect/AIEVec/Transforms/Passes.td"
+  OUTS
+    -gen-pass-decls Dialect/AIEVec/Transforms/Passes.h.inc
+)
+
+iree_cc_library(
+  NAME
+    AIEVecTransformPassHeaders
+  HDRS
+    "${IREE_MLIR_AIE_SOURCE_DIR}/include/aie/Dialect/AIEVec/Transforms/Passes.h"
+    "Passes.h.inc"
+  DEPS
+    ::AIEVecTransformPassesIncGen
+    MLIRPass
+  PUBLIC
+)
+
+iree_cc_library(
+  NAME
+    AIEVecTransformPipelinesHeaders
+  HDRS
+    "${IREE_MLIR_AIE_SOURCE_DIR}/include/aie/Dialect/AIEVec/Pipelines/Passes.h"
+    "Passes.h.inc"
+  DEPS
+    ::AIEVecTransformPassesIncGen
+    MLIRPass
+  PUBLIC
+)
+
+iree_cc_library(
+  NAME
+    AIEVecUtils
+  HDRS
+    "${IREE_MLIR_AIE_SOURCE_DIR}/include/aie/Dialect/AIEVec/Utils/Utils.h"
+  SRCS
+    "${IREE_MLIR_AIE_SOURCE_DIR}/lib/Dialect/AIEVec/Utils/Utils.cpp"
+  DEPS
+    ::defs
+    ::AIEVecDialectIR
+    MLIRIR
+    MLIRTransforms
+)
+
+iree_cc_library(
+  NAME
+    AIEVecTransformPasses
+  HDRS
+    "${IREE_MLIR_AIE_SOURCE_DIR}/include/aie/Dialect/AIEVec/Pipelines/Passes.h"
+    "${IREE_MLIR_AIE_SOURCE_DIR}/include/aie/Dialect/AIEVec/Transforms/Passes.h"
+  SRCS
+    "AIEVecTransformPasses.cpp"
+    "${IREE_MLIR_AIE_SOURCE_DIR}/lib/Dialect/AIEVec/Transforms/ConvertVectorToAIEVec.cpp"
+    "${IREE_MLIR_AIE_SOURCE_DIR}/lib/Dialect/AIEVec/Transforms/VectorToVectorConversions.cpp"
+    "${IREE_MLIR_AIE_SOURCE_DIR}/lib/Dialect/AIEVec/Transforms/VectorToAIEVecConversions.cpp"
+    "${IREE_MLIR_AIE_SOURCE_DIR}/lib/Dialect/AIEVec/Transforms/AIEVecOptimizations.cpp"
+    "${IREE_MLIR_AIE_SOURCE_DIR}/lib/Dialect/AIEVec/Transforms/FoldMulAddChainToConvOp.cpp"
+    "${IREE_MLIR_AIE_SOURCE_DIR}/lib/Dialect/AIEVec/Transforms/DynamicSizeNoImplicitBroadcast.cpp"
+    "${IREE_MLIR_AIE_SOURCE_DIR}/lib/Dialect/AIEVec/Transforms/CopyRemoval.cpp"
+  DEPS
+    ::defs
+    ::AIEVecDialectIR
+    ::AIEVecTransformPassesIncGen
+    ::AIEVecTransformPassHeaders
+    ::AIEVecTransformPipelinesHeaders
+    ::AIEVecAnalysisPassHeaders
+    ::AIEVecUtils
+)
+
+###############################################################################
 # AIE Translation passes.
 ###############################################################################
 
@@ -288,6 +389,7 @@ iree_cc_library(
     "${IREE_MLIR_AIE_SOURCE_DIR}/lib/Targets/AIETargetLdScript.cpp"
     "${IREE_MLIR_AIE_SOURCE_DIR}/lib/Targets/AIETargetShared.cpp"
     "${IREE_MLIR_AIE_SOURCE_DIR}/lib/Targets/AIETargetXAIEV2.cpp"
+    "${IREE_MLIR_AIE_SOURCE_DIR}/lib/Targets/AIEVecToCpp/TranslateAIEVecToCpp.cpp"
   DEPS
     ::AIEDialectIR
     ::AIEXDialectIR

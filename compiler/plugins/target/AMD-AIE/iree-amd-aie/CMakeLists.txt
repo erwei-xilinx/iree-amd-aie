@@ -19,6 +19,8 @@ iree_cc_library(
     iree::target::amd-aie::Transforms
     iree::target::amd-aie::aie::AIEDialectIR
     iree::target::amd-aie::aie::AIETransformPasses
+    iree::target::amd-aie::aie::AIEVecDialectIR
+    iree::target::amd-aie::aie::AIEVecTransformPasses
     iree::target::amd-aie::aie::AIEXDialectIR
     iree::target::amd-aie::aie::AIEXTransformPasses
     iree::target::amd-aie::air::AIRDialectIR

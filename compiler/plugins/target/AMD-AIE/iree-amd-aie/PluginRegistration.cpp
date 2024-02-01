@@ -23,6 +23,7 @@ struct AMDAIESession
     AMDAIE::registerAMDAIEPasses();
     AMDAIE::registerAIETransformPasses();
     AMDAIE::registerAIEXTransformPasses();
+    AMDAIE::registerAIEVecTransformPasses();
     AMDAIE::registerAIRConversionPasses();
     AMDAIE::registerAIRTransformPasses();
   }

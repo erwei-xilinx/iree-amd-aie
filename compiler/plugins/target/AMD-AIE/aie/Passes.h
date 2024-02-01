@@ -12,8 +12,11 @@ namespace mlir::iree_compiler::AMDAIE {
 /// Registration for AIE Transform passes.
 void registerAIETransformPasses();
 
-/// Registration for AIE Transform passes.
+/// Registration for AIEX Transform passes.
 void registerAIEXTransformPasses();
+
+/// Registration for AIEVec Transform passes.
+void registerAIEVecTransformPasses();
 
 }  // namespace mlir::iree_compiler::AMDAIE
 

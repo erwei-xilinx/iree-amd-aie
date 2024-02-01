@@ -70,6 +70,7 @@ iree_cc_library(
     ::AIRDialectIR
     ::AIRTransformOpsGen
     iree::target::amd-aie::aie::AIEDialectIR
+    iree::target::amd-aie::aie::AIEVecDialectIR
     MLIRIR
     MLIRLinalgTransformOps
 )
@@ -185,6 +186,7 @@ iree_cc_library(
     ::AIRDialectIR
     ::AIRRtDialectIR
     iree::target::amd-aie::aie::AIEDialectIR
+    iree::target::amd-aie::aie::AIEVecDialectIR
     iree::target::amd-aie::aie::AIEXDialectIR
     MLIRIR
     MLIRLinalgTransforms
@@ -248,6 +250,7 @@ iree_cc_library(
   DEPS
     ::defs
     iree::target::amd-aie::aie::AIEDialectIR
+    iree::target::amd-aie::aie::AIEVecDialectIR
     ::AIRDialectIR
     ::AIRTransform
     ::AIRTransformOps

@@ -13,6 +13,7 @@
 #include "iree-dialects/Dialect/LinalgTransform/Passes.h"
 #include "iree/compiler/Codegen/Common/CPU/Passes.h"
 #include "iree/compiler/Codegen/Common/Passes.h"
+#include "mlir/Dialect/Affine/Passes.h"
 #include "mlir/Dialect/Linalg/Passes.h"
 #include "mlir/Dialect/MemRef/Transforms/Passes.h"
 #include "mlir/Pass/PassManager.h"
@@ -211,6 +212,28 @@ void addMLIRAIRAIELoweringPasses(OpPassManager &passManager) {
     passManager.addPass(xilinx::air::createAIRToAIEPass(options));
   }
   passManager.addPass(xilinx::air::createAIRLoweringPass());
+
+  // // func.func(affine-loop-tile{tile-sizes=4,4}), func.func(air-unroll-outer-affine-loops{depth=2}), affine-expand-index-ops
+
+  // {
+  //   affine::AffineLoopTilingOptions options;
+  //   options.tileSizes = {4, 4};
+  //   passManager.addNestedPass<func::FuncOp>(
+  //       affine::createLoopTilingPass());
+  //   // passManager.addNestedPass<func::FuncOp>(
+  //   //     affine::AffineLoopTilingBase(options));
+  // }
+
+  // {
+  //   xilinx::air::AIRUnrollOuterPerfectlyNestedLoopsPassOptions options;
+  //   options.clDepth = 2;
+  //   passManager.addNestedPass<func::FuncOp>(
+  //       xilinx::air::createAIRUnrollOuterPerfectlyNestedLoopsPass());
+  //   // passManager.addNestedPass<func::FuncOp>(
+  //   //     affine::AffineLoopTilingBase(options));
+  // }
+  // passManager.addPass(affine::createAffineExpandIndexOpsPass());
+
   passManager.addPass(xilinx::airrt::createAIRRtToIpuPass());
   passManager.addPass(createCanonicalizerPass());
 }
